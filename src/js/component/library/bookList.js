@@ -1,5 +1,6 @@
-import React from 'react';
+
 import fetch from 'isomorphic-fetch';
+import React, { useEffect, useState } from 'react';
 
 class BookList extends React.Component{
 
@@ -11,7 +12,7 @@ class BookList extends React.Component{
     }
 
     componentDidMount(){
-        fetch('http://localhost:1337/books').then((response)=>{
+        fetch(`http://localhost:1337/books/`).then((response)=>{
             if(response.status >= 400){
                 throw new Error("Bad Response From Server");
             }
@@ -19,20 +20,32 @@ class BookList extends React.Component{
         }).then((books)=> {
             // on rajoute les books fetchés  au state books 
             this.setState({ books : books});
-            console.log(books);
+            
         })
     };
     
     render(){
         return(
+            
             <section>
-                <ul>
-
-                
-                {
-                   this.state.books.map(({id, title, description, author, types})=>{
-                       console.log(title);
-                   <h1>{title}</h1>
+                <header>
+                    <select value="CurrentFilter"> 
+                        <option value={''}>Tous</option>
+                        <option value={'?_sort=Name:ASC'}>Titre alphabetique</option>
+                        <option value={'?_sort=created_at:ASC'}>Date de création</option>
+                    </select>
+                </header>
+                <ul className="container">
+                {                  
+                   this.state.books.map((book)=>{
+                       return(
+                        <div key={book.id} className="container">
+                            <div className="row">
+                                <h3>{book.title}</h3>
+                                <p>{book.description}</p>
+                            </div>
+                        </div>
+                       )     
                    })
                 }
                 </ul>
