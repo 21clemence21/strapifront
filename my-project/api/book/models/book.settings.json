@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "books",
+  "info": {
+    "name": "book"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "author": {
+      "type": "string"
+    },
+    "description": {
+      "type": "richtext"
+    },
+    "types": {
+      "collection": "type",
+      "via": "books",
+      "dominant": true
+    }
+  }
+}
